@@ -1,3 +1,4 @@
+//@ -0,0 +1,328 @@
 /*
  * Copyright (c) 2025 FIRST
  * All rights reserved.
@@ -29,7 +30,6 @@
  * TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package org.firstinspires.ftc.teamcode;
 
 import static com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE;
@@ -61,7 +61,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "StarterBotTeleop", group = "StarterBot")
 //@Disabled
 public class StarterBotTeleop extends OpMode {
-    final double FEED_TIME_SECONDS = 1.0;
+    final double FEED_TIME_SECONDS = 4.0;
     final double STOP_SPEED = 0.02; // adjust until jitter disappears
     final double FULL_SPEED = 2.0;
     final double minusFULL = -2.0;
@@ -72,8 +72,8 @@ public class StarterBotTeleop extends OpMode {
      * velocity. Here we are setting the target, and minimum velocity that the launcher should run
      * at. The minimum velocity is a threshold for determining when to fire.
      */
-    final double LAUNCHER_TARGET_VELOCITY = 1500; // rpm
-    final double LAUNCHER_MIN_VELOCITY = LAUNCHER_TARGET_VELOCITY * 0.9; // 90% of target
+    final double LAUNCHER_TARGET_VELOCITY = 6700; // rpm
+    final double LAUNCHER_MIN_VELOCITY =1000;
 
     // Declare OpMode members.
     private DcMotor leftDrive = null;
@@ -247,7 +247,7 @@ arcadeDrive(forward, turn);
         if (gamepad1.left_bumper) {
             launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
         } else if (gamepad1.b) { // stop flywheel
-            launcher.setVelocity(STOP_SPEED);
+            launchState = LaunchState.IDLE;
         }
          if (gamepad2.left_bumper) {
             launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
@@ -311,15 +311,16 @@ arcadeDrive(forward, turn);
                 break;
             case LAUNCHING:
                 if (feederTimer.seconds() > FEED_TIME_SECONDS) {
-                    launchState = LaunchState.IDLE;
+                    //launchState = LaunchState.IDLE;
       //              leftFeeder.setPower(FULL_SPEED);
       //              rightFeeder.setPower(FULL_SPEED);
-            leftFeeder.setPower(STOP_SPEED);
-            rightFeeder.setPower(STOP_SPEED);
+            //leftFeeder.setPower(STOP_SPEED);
+            //rightFeeder.setPower(STOP_SPEED);
     //                leftFeeder.setPower(minusFULL);
     //                rightFeeder.setPower(minusFULL);
                     System.out.println("Launching");
-                }   
+                }
+                launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
                break;
 
         }
