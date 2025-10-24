@@ -61,7 +61,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "StarterBotTeleop", group = "StarterBot")
 //@Disabled
 public class StarterBotTeleop extends OpMode {
-    final double FEED_TIME_SECONDS = 0.5;
+    final double FEED_TIME_SECONDS = 0.25;
     final double STOP_SPEED = 0.04; // adjust until jitter disappears
     final double FULL_SPEED = 2.0;
     final double minusFULL = -2.0;
@@ -305,26 +305,19 @@ arcadeDrive(forward, turn);
                 if (launcher.getVelocity() > LAUNCHER_MIN_VELOCITY) {
                     launchState = LaunchState.LAUNCH;
                 }
-                leftFeeder.setPower(1);
-                rightFeeder.setPower(1);
                 break;
             case LAUNCH:
                 leftFeeder.setPower(FULL_SPEED);
                 rightFeeder.setPower(FULL_SPEED);
                 feederTimer.reset();
                 launchState = LaunchState.LAUNCHING;
-                System.out.println("Launch");
                 break;
             case LAUNCHING:
                 if (feederTimer.seconds() > FEED_TIME_SECONDS) {
                     launchState = LaunchState.IDLE;
-      //              leftFeeder.setPower(FULL_SPEED);
-      //              rightFeeder.setPower(FULL_SPEED);
-            leftFeeder.setPower(STOP_SPEED);
+              leftFeeder.setPower(STOP_SPEED);
             rightFeeder.setPower(STOP_SPEED);
-    //                leftFeeder.setPower(minusFULL);
-    //                rightFeeder.setPower(minusFULL);
-                    System.out.println("Launching");
+                  
                 }
                 launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
                break;
