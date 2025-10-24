@@ -61,8 +61,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "StarterBotTeleop", group = "StarterBot")
 //@Disabled
 public class StarterBotTeleop extends OpMode {
-    final double FEED_TIME_SECONDS = 4.0;
-    final double STOP_SPEED = 0.02; // adjust until jitter disappears
+    final double FEED_TIME_SECONDS = 0.5;
+    final double STOP_SPEED = 0.04; // adjust until jitter disappears
     final double FULL_SPEED = 2.0;
     final double minusFULL = -2.0;
 
@@ -72,7 +72,7 @@ public class StarterBotTeleop extends OpMode {
      * velocity. Here we are setting the target, and minimum velocity that the launcher should run
      * at. The minimum velocity is a threshold for determining when to fire.
      */
-    final double LAUNCHER_TARGET_VELOCITY = 6700; // rpm
+    final double LAUNCHER_TARGET_VELOCITY = 2920; // rpm
     final double LAUNCHER_MIN_VELOCITY =1000;
 
     // Declare OpMode members.
@@ -246,11 +246,18 @@ arcadeDrive(forward, turn);
          */
         if (gamepad1.left_bumper) {
             launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
+            launchState = LaunchState.SPIN_UP;
+            leftFeeder.setPower(FULL_SPEED);
+            rightFeeder.setPower(FULL_SPEED);
         } else if (gamepad1.b) { // stop flywheel
-            launchState = LaunchState.IDLE;
+            launcher.setVelocity(STOP_SPEED);
         }
          if (gamepad2.left_bumper) {
             launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
+            launchState = LaunchState.SPIN_UP;
+            leftFeeder.setPower(FULL_SPEED);
+            rightFeeder.setPower(FULL_SPEED);
+
         } else if (gamepad2.b) { // stop flywheel
             launcher.setVelocity(STOP_SPEED);
         }
@@ -297,7 +304,6 @@ arcadeDrive(forward, turn);
                 launcher.setVelocity(LAUNCHER_TARGET_VELOCITY);
                 if (launcher.getVelocity() > LAUNCHER_MIN_VELOCITY) {
                     launchState = LaunchState.LAUNCH;
-                    System.out.println("Spin Up");
                 }
                 leftFeeder.setPower(1);
                 rightFeeder.setPower(1);
@@ -311,11 +317,11 @@ arcadeDrive(forward, turn);
                 break;
             case LAUNCHING:
                 if (feederTimer.seconds() > FEED_TIME_SECONDS) {
-                    //launchState = LaunchState.IDLE;
+                    launchState = LaunchState.IDLE;
       //              leftFeeder.setPower(FULL_SPEED);
       //              rightFeeder.setPower(FULL_SPEED);
-            //leftFeeder.setPower(STOP_SPEED);
-            //rightFeeder.setPower(STOP_SPEED);
+            leftFeeder.setPower(STOP_SPEED);
+            rightFeeder.setPower(STOP_SPEED);
     //                leftFeeder.setPower(minusFULL);
     //                rightFeeder.setPower(minusFULL);
                     System.out.println("Launching");
