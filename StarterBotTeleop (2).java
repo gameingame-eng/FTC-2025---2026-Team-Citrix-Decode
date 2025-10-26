@@ -63,8 +63,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class StarterBotTeleop extends OpMode {
     final double FEED_TIME_SECONDS = 0.25;
     final double STOP_SPEED = 0.04; // adjust until jitter disappears
-    final double FULL_SPEED = 2.0;
-    final double minusFULL = -2.0;
+    final double FULL_SPEED = 1.0;
+    final double minusFULL = -1.0;
 
      /*
      * When we control our launcher motor, we are using encoders. These allow the control system
