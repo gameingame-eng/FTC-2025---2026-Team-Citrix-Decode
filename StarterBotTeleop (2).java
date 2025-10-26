@@ -218,14 +218,20 @@ telemetry.update();
         // Default single-driver arcade drive
         // Scale factor to slow down the robot
         double speedScale = 0.75;
-
+        // Define normal and boost
+        double normalScale = speedScale;       // your existing scale
+        double boostScale  = speedScale * 2.5; // boost makes the robot 2.5x faster
+        // check if either driver is pressing boost
+        boolean boostActive = gamepad1.a || gamepad2.a;
+        // pick the scale to use (if a is pressed boostScale if its not normalScale.)
+        double activeScale = boostActive ? boostScale : normalScale;
         // Gamepad 1 inputs
         double forward1 = (gamepad1.left_trigger - gamepad1.right_trigger) * speedScale;
-        double turn1    = -gamepad1.left_stick_x * speedScale;
+        double turn1    = -gamepad1.left_stick_x * activeScale;
 
         // Gamepad 2 inputs
         double forward2 = (gamepad2.left_trigger - gamepad2.right_trigger) * speedScale;
-        double turn2    = -gamepad2.left_stick_x * speedScale;
+        double turn2    = -gamepad2.left_stick_x * activeScale;
 
         // Blend both drivers' inputs (average)
         double forward = (forward1 + forward2) / 2.0;
