@@ -220,12 +220,12 @@ telemetry.update();
         double speedScale = 0.75;
 
         // Gamepad 1 inputs
-        double forward1 = (gamepad1.left_trigger - gamepad1.right_trigger) * speedScale;
-        double turn1    = -gamepad1.left_stick_x * speedScale;
+        double forward1 = (gamepad1.right_trigger - gamepad1.left_trigger) * speedScale;
+        double turn1    = -gamepad1.right_stick_x * speedScale;
 
         // Gamepad 2 inputs
-        double forward2 = (gamepad2.left_trigger - gamepad2.right_trigger) * speedScale;
-        double turn2    = -gamepad2.left_stick_x * speedScale;
+        double forward2 = (gamepad2.right_trigger - gamepad2.left_trigger) * speedScale;
+        double turn2    = -gamepad2.right_stick_x * speedScale;
 
         // Blend both drivers' inputs (average)
         double forward = (forward1 + forward2) / 2.0;
