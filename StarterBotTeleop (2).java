@@ -61,7 +61,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp(name = "StarterBotTeleop", group = "StarterBot")
 //@Disabled
 public class StarterBotTeleop extends OpMode {
-    final double FEED_TIME_SECONDS = 0.25;
+    final double FEED_TIME_SECONDS = 0.4;
     final double STOP_SPEED = 0.04; // adjust until jitter disappears
     final double FULL_SPEED = 2.0;
     final double minusFULL = -2.0;
@@ -72,8 +72,8 @@ public class StarterBotTeleop extends OpMode {
      * velocity. Here we are setting the target, and minimum velocity that the launcher should run
      * at. The minimum velocity is a threshold for determining when to fire.
      */
-    final double LAUNCHER_TARGET_VELOCITY = 3040; // rpm
-    final double LAUNCHER_MIN_VELOCITY =1000;
+    final double LAUNCHER_TARGET_VELOCITY = 1500; // rpm
+    final double LAUNCHER_MIN_VELOCITY =1030;
 
     // Declare OpMode members.
     private DcMotor leftDrive = null;
